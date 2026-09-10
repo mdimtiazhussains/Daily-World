@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Daily World Briefing"
+description = "A focused daily briefing that brings together world news, business, innovation, AI products, technology trends, business opportunities, education updates, policy, and a daily quote with a historical moment for curious people who want to start their day informed."
+version = "1.0.0"
+id = "artifacts/daily-world-briefing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26210
+
+[services.development]
+run = "pnpm --filter @workspace/daily-world-briefing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/daily-world-briefing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/daily-world-briefing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26210"
+BASE_PATH = "/"
